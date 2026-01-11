@@ -238,6 +238,60 @@ gitee创建仓库
   + 拉取命令：`git pull [remote name][branch name]` `
     + 拉取指令就是将远端仓库的修改拉到本地并自动进行合并，等同于fetch+merge
     + 如果不指定远端名称和分支名，则抓取所有并更新当前分支。
+  + 解决合并冲突
+    + 远程分支也是分支，所以合并时冲突的解决方式也和解决本地分支冲突相同相同
+
+### 5.4 Sparse-checkout  
+
+> 背景：我在b环境只想拉取一部分文件，不想将整个文件拉取下来
+>
+> Sparse-checkout:用于拉取仓库的部分和 指定文件
+
+在 需要拉取代码的环境进行配置:
+
++ 拉取代码
+
+  + ```shell
+    git clone --no-checkout <仓库地址>
+    cd <文件名>
+    ```
+
++ 开启sparse-checkout
+
+  + ```shell
+    # 告知这是一个稀疏仓库
+    git sparse-checkout init --cone  
+    ```
+
++ 指定允许出现的目录
+
+  + ```shell
+    git sparse-checkout set 02_Business-Testing<文件名>
+    
+    ```
+
++ 触发一次checkout
+
+  + ```shell
+    git checkout master
+    ```
+
++ 验证是否为sparse-checkout
+
+  + ```shell
+    git status
+    # You are in a sparse checkout.
+    ```
+
+取消sparse ：
+
+  ```shell
+git sparse-checkout disable # 关闭sparse-checkout
+  ```
+
+```shell
+git checkout -f master      # 强制恢复工作区
+```
 
 
 
