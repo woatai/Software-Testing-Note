@@ -267,9 +267,8 @@ gitee创建仓库
 
   + ```shell
     git sparse-checkout set 02_Business-Testing<文件名>
-    
     ```
-
+  
 + 触发一次checkout
 
   + ```shell
