@@ -99,7 +99,7 @@ credential.https://gitee.com.provider=generic
 
    ```shell
    # 用于输出git提交日志
-   alias git-log='git 1og --pretty=oneline --all --graph --abbrev-commit'
+   alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
    alias ll='ls -al'
    ```
 
@@ -109,7 +109,7 @@ credential.https://gitee.com.provider=generic
    2. **命令必须放在引号里**
    3. **整个是一行**
 
-3. 在`./bashrc`文件 执行`source ~/bashrc`
+3. 在`./bashrc`文件 执行`source ~/.bashrc`
 
 ### 3.3 基础操作命令
 
