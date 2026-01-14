@@ -6,6 +6,8 @@
 
 https://www.hackerrank.com/dashboard 
 
+https://pynative.com/python-basic-exercise-for-beginners/
+
 ## basic
 
 ### e1 找出亚军
@@ -15,7 +17,7 @@ https://www.hackerrank.com/dashboard
 > ​	输入格式
 > 第一行包含n。第二行包含一个由n个整数组成的数组A，每元素之间用空格分隔。
 >
->  ![image-20260113150908523](py_exercise.assets/image-20260113150908523.png)
+>   ![image-20260113150908523](py_exercise.assets/image-20260113150908523.png)
 >
 > 输入
 >
@@ -73,6 +75,7 @@ for i in range(1,11):
 > 给定两个整数，编写一个Python程序，仅当它们的乘积等于或小于1000时返回其乘积;否则返回它们的和。
 
 ```python
+
 ```
 
 ### e4  嵌套列表
@@ -133,4 +136,8 @@ for i in range(1,11):
 >
 > 最低成绩为37.2，属于Tina。第二低成绩为37.21，属于Harry和Berry，因此我们按字母顺序排列他们的名字，并将每个名字打印在新行上。
 >
-> 
+
+```python
+
+```
+
