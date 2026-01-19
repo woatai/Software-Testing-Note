@@ -6,8 +6,6 @@
 
 https://www.hackerrank.com/dashboard 
 
-https://pynative.com/python-basic-exercise-for-beginners/
-
 ## basic
 
 ### e1 找出亚军
@@ -75,14 +73,11 @@ for i in range(1,11):
 > 给定两个整数，编写一个Python程序，仅当它们的乘积等于或小于1000时返回其乘积;否则返回它们的和。
 
 ```python
-
 ```
 
 ### e4  嵌套列表
 
-> 给定一个班级中N名学生的姓名和成绩，将它们存储在一个嵌套列表中，并打印出成绩排名第二低的学生的姓
->
-> 名。
+> 给定一个班级中N名学生的姓名和成绩，将它们存储在一个嵌套列表中，并打印出成绩排名第二低的学生的姓名。
 >
 > **注意**: 如果有多名学生的成绩为第二低分，则按字母顺序排列他们的名字，并在每行打印一个名字。
 >
@@ -95,21 +90,21 @@ for i in range(1,11):
 > 顺序排序后，姓名依次打印如下:
 >
 > ```
-> alpha
+>alpha
 > beta
 > ```
->
+> 
 > 约束条件
 >
 > + 2 《 N 《 5
-> + 总会有一个第二低的分数
->
+>+ 总会有一个第二低的分数
+> 
 > 输出格式
 >
 > 打印成绩第二低的学生姓名。如果有多个学生，按字母顺序排列并逐个输出在新行上。
 >
 > 举例输入：
-> ```
+>```
 > 5
 > Harry
 > 37.21
@@ -122,14 +117,14 @@ for i in range(1,11):
 > Harsh
 > 39
 > ```
->
+> 
 > 输出：
 >
 > ```
-> Berry
+>Berry
 > Harry
 > ```
->
+> 
 > 本班有5名学生，其姓名和成绩已整理成以下列表:
 >
 > python_students = [['Harry', 37.21], ['Berry', 37.21],['Tina',37.2], ['Akriti',41], ['Harsh',39]]
@@ -138,6 +133,35 @@ for i in range(1,11):
 >
 
 ```python
-
+def find_sec(arr):
+    min_score  = None
+    sec = None
+    sec_li = []
+    for i in arr:
+        if min_score is None or i[1] < min_score:
+            if min_score is not None:
+                sec = min_score
+            min_score = i[1]
+        elif i[1] != min_score and (sec is None or i[1] <= sec):
+            sec =  i[1]   
+    for name, score in arr:
+        if score == sec:
+            sec_li.append(name)
+    fin_li = sorted(sec_li)   
+    for i in fin_li:
+        print(i)
+if __name__ == "__main__":
+    # arr = [["chi",37.21],["beta",37.21],["plpha",37.2],["alpha",26]]
+    # find_sec(arr)
+    # print(find_sec(arr))
+    arr = []
+    for _ in range(int(input())):
+        name = input()
+        score = float(input())
+        arr.append([name,score])
+    print(arr)
+    # find_sec(arr)
 ```
+
+待优化
 
