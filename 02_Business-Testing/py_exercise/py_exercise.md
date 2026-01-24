@@ -1,6 +1,6 @@
 # py_exercise
 
-网址：
+网址：https://pynative.com/python-basic-exercise-for-beginners/
 
 黑客松
 
@@ -151,6 +151,50 @@ if __name__ == "__main__":
         arr.append([name,score])
     print(arr)
 ```
+
+### e5 打印偶数数列的字符串
+
+```python
+str = input('输入你的字符 ')
+for i in range(0,len(str),2):
+    print(str[i])
+```
+
+### e6 元组 
+
+```python
+# python 3
+if __name__ == '__main__':
+   num  = int(raw_input())
+   l1 = map(int,raw_input().split()) # map 映射 列表将其强转为 int 数据类型
+   print(hash(tuple(l1)))
+```
+
+> 元组的应用场景：
+>
+> 1. 通常设置不可变的配置 
+>
+>    比如订单状态 order_status = ('待支付','已支付','已取消')
+>
+> 2. 函数返回多个值 其实也是元组
+>
+> 3. 表示“一组强关联数据” 比如经纬度  point = (113.25, 23.01)   # 经度, 纬度
+>
+> 4. 作为字典的key 
+>
+>    ```python
+>    d = {}
+>    d[(1,2)] = 'ok'
+>    print(d[(1,2)])
+>    ```
+
+
+
+
+
+
+
+
 
 
 
