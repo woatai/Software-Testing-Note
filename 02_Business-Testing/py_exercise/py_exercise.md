@@ -134,34 +134,37 @@ for i in range(1,11):
 
 ```python
 def find_sec(arr):
-    min_score  = None
     sec = None
-    sec_li = []
-    for i in arr:
-        if min_score is None or i[1] < min_score:
-            if min_score is not None:
-                sec = min_score
-            min_score = i[1]
-        elif i[1] != min_score and (sec is None or i[1] <= sec):
-            sec =  i[1]   
-    for name, score in arr:
-        if score == sec:
-            sec_li.append(name)
-    fin_li = sorted(sec_li)   
+	# 通过集合 {} 去查重 ，然后用sorted 去排序
+    scores  = sorted({score for _,score in arr }) 
+    #找出第二
+    sec = scores[1]
+   
+    fin_li = sorted(name for name,score in arr if score == sec)  
     for i in fin_li:
         print(i)
 if __name__ == "__main__":
-    # arr = [["chi",37.21],["beta",37.21],["plpha",37.2],["alpha",26]]
-    # find_sec(arr)
-    # print(find_sec(arr))
-    arr = []
+     arr = []
     for _ in range(int(input())):
         name = input()
         score = float(input())
         arr.append([name,score])
     print(arr)
-    # find_sec(arr)
 ```
 
-待优化
+
+
+assert
+
+>  断言语句，主要用于 校验某个条件是否成立，如果不成立就**立即**抛出异常，常用于**测试、调试、校验前置条件**。 	
+>
+>  **assert = “我认为这里一定是对的，否则程序就该报错”**
+
+基本语法：
+
+```python
+assert 条件, "错误说明"
+```
+
+例子：
 
