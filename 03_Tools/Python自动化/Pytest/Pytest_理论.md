@@ -216,7 +216,7 @@ pytest -h
 
    ```shell
    (.venv) D:\python-objects\pytest01>pytest --markers
-   @pytest.mark.api = 接口测试:
+   @pytest.mark.api: 接口测试:
    
    @pytest.mark.web:UI测试
    
@@ -227,11 +227,79 @@ pytest -h
    @pytest.mark.pay:支付相关
    ```
 
-2. 再标记
+2. 再标记 通过装饰器进行装饰
 
+   ```python
+       @pytest.mark.api
+       def test_int(self):
+           assert add(1, 2) == 3
    
+       @pytest.mark.web
+       def test_str(self):
+           assert add("1", "3") == '13'
+   
+       @pytest.mark.ut
+       def test_list(self):
+           assert  add([1],[2,3,4]) ==[1,2,3,4]
+   ```
 
 3. 后筛选
+
+   ```shell
+   python -v -m [对应的配置名 例如 api]
+   ```
+
+### 6.2 框架内置标记   
+
+用户自定义标记为用例增加特殊执行效果
+
+和自定义标记区别：
+
+1. 系统内已配置 通过`pytest --marks`查看
+2. 不仅可以筛选，还可以增加特殊效果
+3. 不同的标记，增加不同的特殊效果
+   + **skip：无条件跳过**
+   + **skipif：有条件跳过**
+   + **xfail：预期失败**
+   + **parametrize：参数化**
+   +  **Usefixtures：使用fixtures**
+
+
+
+### 七、数据驱动测试参数
+
+> 通过数据文件去决定测试用例的数量
+
+1. 创建数据文件
+
+2. 读取csv文件
+
+   ```python
+   def read_csv(path):
+       with open(path, newline='', encoding='utf-8') as f:
+           reader = csv.reader(f)
+           next(reader)  # 跳过表头
+   
+           return [
+               tuple(map(int, row))
+               for row in reader
+           ]
+   ```
+   
+3. 驱动测试
+
+   ```python
+       @pytest.mark.parametrize(
+           "a,b,c",
+           read_csv("data.csv")
+       )
+       @pytest.mark.ddt
+       def test_int_(self,a,b,c):
+           assert add(a, b) == c
+   ```
+
+11
+
 
 
 
