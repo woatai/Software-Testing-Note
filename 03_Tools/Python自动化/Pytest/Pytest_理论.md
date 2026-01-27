@@ -264,13 +264,19 @@ pytest -h
    + **parametrize：参数化**
    +  **Usefixtures：使用fixtures**
 
-
-
-### 七、数据驱动测试参数
+## 七、数据驱动测试参数
 
 > 通过数据文件去决定测试用例的数量
 
 1. 创建数据文件
+
+   ```
+   a,b,c
+   1,2,3
+   ...
+   ```
+
+   
 
 2. 读取csv文件
 
@@ -285,7 +291,7 @@ pytest -h
                for row in reader
            ]
    ```
-   
+
 3. 驱动测试
 
    ```python
@@ -298,7 +304,150 @@ pytest -h
            assert add(a, b) == c
    ```
 
-11
+## 八、夹具fixture
+
+夹具：在用例**执行之前、执行之后**，自动运行代码
+
+场景:
+
++ 之前:加密参数 /之后:解密结果 
++ 之前:启动浏览器 /之后:关闭浏览器   
++ 之前:注册、登录账号/之后:删除账号
+
+### 8.1 创建夹具
+
+```python
+# 创建夹具
+@pytest.fixture
+def f():
+    # 前置参数
+    print(datetime.now(),"用例执行前")
+    yield
+    # 后置参数
+    print(datetime.now(), "用例执行后")
+```
+
+**步骤**
+
+1. 创建函数
+
+2. 添加装饰器
+
+3. 添加yield 生成器
+
+### 8.2 使用夹具
+
+1.  通过参数的形式进行夹具的使用
+
+   ```python
+   # 夹具传参
+   def test_1( 夹具的函数名 ):
+       pass
+   ```
+   
+2.  给**用例**加上`usefixtures`标记
+   
+   ```python
+   @pytest.mark.usefixtures("f")
+   def test_2():
+       pass
+   ```
+
+
+
+### 8.3 高级用法
+
+1. 自动使用
+
+```python
+@pytest.fixture(autouse=True) # 加参数配置自动执行
+def f():
+    # 前置参数
+    print(datetime.now(),"用例执行前")
+    yield
+    # 后置参数
+    print(datetime.now(), "用例执行后")
+```
+
+2. 依赖使用
+
+```python
+@pytest.fixture()
+def ff():
+    print("我也是fixtrue ,依赖使用")
+@pytest.fixture(autouse=True)
+def f(ff): # 以·参数的形式去依赖 fixture
+    # 前置参数
+    print(datetime.now(),"用例执行前")
+    yield
+    # 后置参数
+    print(datetime.now(), "用例执行后")
+```
+
+```shell
+tests/test_jiaju.py::test_2 我也是fixtrue ,依赖使用
+2026-01-27 23:00:41.878100 用例执行前
+PASSED2026-01-27 23:00:41.878100 用例执行后
+```
+
+3. 返回内容： 接口关联、接口自动化封装
+
+   ```python
+   @pytest.fixture(autouse=True)
+   def f(ff):
+       # 前置参数
+       print(datetime.now(),"用例执行前")
+       yield  123 # 传递到用例使用
+       # 后置参数
+       print(datetime.now(), "用例执行后")
+   # 夹具传参
+   def test_1(f):
+       print("收到 fixture",f)
+       pass
+   ```
+
+4. 范围共享：  场景：多个用例之间 开关浏览器 容易造成资源浪费
+
+   + **默认**范围：function （一个用例）
+   + 全局范围：session 
+
+   ```python
+   @pytest.fixture(scope='session')
+   def ff():
+       print("我也是fixtrue ,依赖使用")
+   @pytest.fixture(autouse=True,scope='session')
+   def f(ff):
+       # 前置参数
+       print(datetime.now(),"用例执行前")
+       yield  123 # 传递到用例使用
+       # 后置参数
+       print(datetime.now(), "用例执行后")
+   ```
+
+   ```shell
+   tests/test_jiaju.py::test_1 我也是fixtrue ,依赖使用
+   2026-01-27 23:20:29.608055 用例执行前
+   收到 fixture 123
+   PASSED
+   tests/test_jiaju.py::test_2 PASSED2026-01-27 23:20:29.609069 用例执行后
+   ```
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
