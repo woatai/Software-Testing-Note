@@ -188,6 +188,195 @@ if __name__ == '__main__':
 >    print(d[(1,2)])
 >    ```
 
+## String
+
+### e1 String Split and Join
+
+> 在python 字符串可以根据分隔符进行分割。
+>
+> 例子:
+>
+> ```python
+> >>> a = "this is a string"
+> >>> a = a.split(" ") # a is converted to a list of strings. 
+> >>> print a
+> ['this', 'is', 'a', 'string']
+> ```
+>
+> 连接字符串很简单：
+>
+> ```python
+> >>> a = "-".join(a)
+> >>> print a
+> this-is-a-string 
+> ```
+
+任务
+
+给定一个字符串。用空格分隔符“ ”分割该字符串，并用连字符“-”连接。
+
+**函数描述**
+
+在下方编辑器中完成split_and_join函数。
+
+split_and_join有以下参数:
+
++ 字符串行:由空格分隔的单词组成的字符串
+
+**返回值**
+
++ 字符串: 结果字符串
+
+**输入格式**
+一行包含由空格分隔的单词组成的字符串。
+
+示例输入
+
+```
+this is a string  
+```
+
+示例输出
+
+```
+this-is-a-string
+```
+
+```python
+def split_and_join(line):
+    return "-".join(line.split(" "))
+
+if __name__ == '__main__':
+    line = input()
+    result = split_and_join(line)
+    print(result)
+```
+
+###  e2 你叫什么名字?
+
+你被给予一个人的名字和姓氏在两行上。你的任务是读取它们并打印以下内容:
+
+> Hello `firstname` `lastname`! You just delved into python.
+
+**函数描述**
+
+在下方编辑器中完成print_full_name函数。
+
+print_full_name函数具有以下参数:
+
++ 字符串first:名字
++ 字符串last:姓氏
+
+**输出内容**
+
++ string: 'Hello 先名 姓氏!你刚刚进入了Python'，其中先名和姓氏被替换为 first 和 last。
+
+**输入格式**
+
+第一行包含名字，第二行包含姓氏。
+
+**约束条件**
+
+名字和姓氏的长度均 <= 10。
+
+**例子输出**
+
+```
+Ross
+Taylor
+```
+
+**例子输入**
+
+```
+Hello Ross Taylor! You just delved into python.
+```
+
+```python
+def print_full_name(first, last):
+    print(f"Hello {first} {last}! You just delved into python.")
+
+if __name__ == '__main__':
+```
+
+### e3 突变
+
+**示例输入**
+
+```
+STDIN           Function
+-----           --------
+abracadabra     s = 'abracadabra'
+5 k             position = 5, character = 'k'
+```
+
+**示例输出**
+
+```
+abrackdabra
+```
+
+```python
+def mutate_string(string, position, character):
+    res = string[:position] + character + string[position+1:]
+    return res
+```
+
+### e4 找到一个字符串
+
+在这个挑战中，用户输入一个字符串和一个子字符串。你需要统计子字符串在给定字符串中出现的次数。字符串遍历将从左到右进行，而不是从右到左。
+
+**注意：**字符串区分大小写。 
+
+**输入格式**
+
+输入的第一行包含原始字符串。下一行包含子字符串。
+
+**约束条件**
+
+1 《 len（string）《200 
+
+字符串中的每个字符都是ASCII字符。
+
+**输出格式**
+
+输出表示子字符串在原字符串中出现总次数的整数。
+
+**输入示例**
+
+```
+ABCDCDC
+CDC
+```
+
+**输出示例**
+
+```
+2
+```
+
+```python
+def count_substring(string, sub_string):
+    count = 0
+    for i in range(0,len(string)-len(sub_string)+1):
+        # print(string[i:len(sub_string)+i])
+        if string[i:len(sub_string)+i] == sub_string:
+            count += 1
+    return count
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
