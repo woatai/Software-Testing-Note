@@ -365,23 +365,132 @@ def count_substring(string, sub_string):
     return count
 ```
 
+### e5 字符串验证器
+
+> 前言：python内置了用于基本数据的字符串验证方法。它可以检查字符串是否由字母字符、字母数字字符、数字等组成。
+>
+> `str.isalnum()`
+>
+> 该方法检查字符串的所有字符是否为字母数字 (a-z、A-Z 和0-9)
+>
+> ```python
+> >>> print 'ab123'.isalnum()
+> True
+> >>> print 'ab123#'.isalnum()
+> False
+> ```
+>
+> `str.isalpha()`
+>
+> 该方法检查字符串的所有字符是否为字母(a-z和A-Z)
+>
+> ```
+> >>> print 'abcD'.isalpha()
+> True
+> >>> print 'abcd1'.isalpha()
+> False
+> ```
+>
+> `str.isdigit()`
+>
+> 此方法检查字符串中的所有字符是否均为数字（0-9）。
+>
+> ````python
+> >>> print '1234'.isdigit()
+> True
+> >>> print '123edsd'.isdigit()
+> False
+> ````
+>
+> `str.islower() `        `str.isupper`
+>
+> 该方法检查字符串的所有字符是否为小写字母(a-z)。
+>
+> 该方法检查字符串的所有字符是否为大写字母(A-Z)。
+>
+> ```python
+> >>> print 'abcd123#'.islower()
+> True
+> >>> print 'Abcd123#'.islower()
+> False
+> >>> print 'ABCD123#'.isupper()
+> True
+> >>> print 'Abcd123#'.isupper()
+> False
+> ```
+
+**任务**
+
+你被给定一个字符串S。
+你的任务是判断字符串S是否包含:字母数字字符、字母字符、数字、小写字母和大写字母。
+
+**输入格式**
+
+一行字符串格式
+
+**约束**
+0 < len(s) < 1000
+
+**输出格式**
+
+输出格式
+
++ 在第一行，如果S包含任何字母数字字符，则打印True;否则，打印False。
++ 在第二行，如果S包含任何字母字符，则打印True;否则，打印False。
++ 在第三行，如果S包含任何数字，则打印True;否则，打印False。
++ 在第四行，如果S包含任何小写字母，则打印True;否则，打印False。
++ 在第五行，如果S包含任何大写字母，则打印True;否则，打印False。
+
+```python
+
+```
 
 
 
 
 
+### e6 文本换行
 
+> 你被给予一个字符串和一个宽度值。
+> 你的任务是将字符串包装成宽度为指定值的段落。
 
+**函数描述**
 
+在下方编辑器中完成wrap函数。
 
+wrap函数具有以下参数：
 
++ string string: 一个长字符串
++ int max_width: 要包装的宽度
 
+**返回值**
 
++ string: 带有换行符('\n')的单个字符串，表示应该在何处换行
 
+**输入格式**
 
+第一行包含一个字符串。
+第二行包含宽度值。
 
+**示例输入 0**
+```
+ABCDEFGHIJKLIMNOQRSTUVWXYZ
+4
+```
 
+**示例输出 0**
+```
+ABCD
+EFGH
+IJKL
+IMNO
+QRST
+UVWX
+YZ
+```
 
+```python
+```
 
 
 
