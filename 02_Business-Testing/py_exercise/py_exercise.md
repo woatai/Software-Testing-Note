@@ -433,26 +433,52 @@ def count_substring(string, sub_string):
 
 **输出格式**
 
-输出格式
-
 + 在第一行，如果S包含任何字母数字字符，则打印True;否则，打印False。
 + 在第二行，如果S包含任何字母字符，则打印True;否则，打印False。
 + 在第三行，如果S包含任何数字，则打印True;否则，打印False。
 + 在第四行，如果S包含任何小写字母，则打印True;否则，打印False。
 + 在第五行，如果S包含任何大写字母，则打印True;否则，打印False。
 
-```python
+**输入示例**
 
+```python
+qA2
 ```
 
+**输出示例**
 
+```
+True
+True
+True
+True
+True
+```
 
+```python
+s = "qA2"
+print(any(c.isalnum() for c in s)) # 判断字母数字字符
+print(any(c.isalpha() for c in s)) # 判断字母字符
+print(any(c.isdigit() for c in s)) # 判断数字
+print(any(c.islower() for c in s)) # 判断 小写
+print(any(c.isupper() for c in s)) # 判断 大写
+```
 
+**总结**
+
+> 应用了字符串的相关方法使用，
+>
+> `any（）`  函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，
+>
+> 则返回 True。元素除了是 0、空、FALSE 外都算 TRUE。
 
 ### e6 文本换行
 
-> 你被给予一个字符串和一个宽度值。
-> 你的任务是将字符串包装成宽度为指定值的段落。
+**task**
+
+你被给予一个字符串和一个宽度值。
+
+你的任务是将字符串包装成宽度为指定值的段落。
 
 **函数描述**
 
@@ -490,9 +516,20 @@ YZ
 ```
 
 ```python
+# 文本换行
+def wrap(string,m_w):
+    li = []
+    for i in range(m_w,len(string)+1,m_w):
+        li.append(string[i-m_w:i])
+    if len(string) % m_w != 0:
+        li.append(string[-(len(string) % m_w):])
+    return '\n'.join(li)
+
+if __name__  == "__main__":
+    string, max_width = "ABCDEFGHIJKLIMNOQRSTUVWXYZ",4
+    result = wrap(string, max_width)
+    print(result)
 ```
-
-
 
 
 
