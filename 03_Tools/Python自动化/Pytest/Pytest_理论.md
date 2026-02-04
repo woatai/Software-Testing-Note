@@ -4,11 +4,11 @@
 
 测试框架: 抽象出来的工具集合，提供大量组件、工具、功能
 
-+ 用例发现
-+ 用例管理
-+ 环境管理
-+ 用例执行
-+ 测试报告
++ 环境管理  fixture
++ 用例发现  命令
++ 用例执行  命令行和代码 参数化
++ 用例管理  mark allure 
++ 测试报告  allure
 
 背景：
      大部分编程语言，都有测试框架:
@@ -409,7 +409,10 @@ PASSED2026-01-27 23:00:41.878100 用例执行后
 4. 范围共享：  场景：多个用例之间 开关浏览器 容易造成资源浪费
 
    + **默认**范围：function （一个用例）
-   + 全局范围：session 
+   + 全局范围：session   
+     + 使用`conftest.py` 实现 跨文件的全局范围  
+       + 在根目录 新建 `conftest.py` 文件
+     + 》 命名空间 怎么跨空间 使用第三方空间
 
    ```python
    @pytest.fixture(scope='session')
@@ -432,13 +435,294 @@ PASSED2026-01-27 23:00:41.878100 用例执行后
    tests/test_jiaju.py::test_2 PASSED2026-01-27 23:20:29.609069 用例执行后
    ```
 
-   
+
+## 九、常用的插件
+
+### 9.1 pytest-html
+
+用途：生成html测试报告
+
+**安装**：
+
+```shell
+pip install  pytest-html
+```
+
+输入pytest 可以查询看到对应的 `plugins: html-4.2.0`
+
+**使用**
+
+在配置文件 `pytest.ini` 文件上去添加 
+
+```ini
+addopts = --html=report.html --self-contained-html
+```
+
+命令去输入 `pytest ` 后 根目录会有html的文件
+
+### 9.2 pytest-xdist
+
+用途：分布式进行
+
+**安装：**
+
+```shell
+pip install pytest-xdist
+```
+
+**使用**
+
+```shell
+pytest -n N(表示数字)
+```
+
+**使用注意**
+
++ 只有在任务本身耗时较长，超出调用成本很多的时候，才有意义
++ 分布式执行，有并发问题:资源竞争、乱序  `不能使用`
+
+### 9.3 pytest-rererunfailures
+
+**安装**
+
+```
+pip install pytest-rererunfailures
+```
+
+**使用**
+
+```shell
+pytest -m rr --reruns 5 --reruns-delay 1 
+```
+
+### 9.4 pytest-result-log
+
+用途：把用例的执行结果记录到日志文件中
+
+**安装：**
+
+```shell
+pip install pytest-result-log
+```
+
+**使用**： 在日志文件进行配置
+
+```ini
+# ========== 文件日志（完整） ==========
+log_file = ./logs/pytest.log
+log_file_level = INFO
+log_file_format = %(asctime)s [%(levelname)s] %(name)s | %(filename)s:%(lineno)s | %(message)s
+log_file_date_format = %Y-%m-%d %H:%M:%S
+
+# ========== 控制台日志（精简） ==========
+log_cli = true
+log_cli_level = WARNING
+log_cli_format = [%(levelname)s] %(message)s
+
+# ========== pytest-result-log ==========
+result_log_enable = 1
+result_log_separator = 1
+
+# 分割线用 INFO，不污染 warning
+result_log_level_separator = info
+
+# 失败信息详细，但不刷屏
+result_log_level_verbose = warning
+```
+
+## 十、插件管理
+
+[Pytest Plugin List ](https://docs.pytest.org/en/stable/reference/plugin_list.html)
+
+pytest 插件生态是pytest特别的优势之处
+
+**插件分两类**：
+
++ 框架内置的：不需要安装
++ 第三方插件： 需要安装
+
+**插件的启用管理**
+
++ 启用:`-p abc`
++ 禁用:`-p no:abc `
+
+**插件使用方式:**
+
+1. 参数
+2. 配置文件
+3. fixture
+4. mark
+
+## 十一、企业级测试报告
+
+allure 是一个测试报告框架
+
+### 11.1 基本使用
+
+**安装**
+
+```
+pip install allure-pytest
+```
+
+**配置**
+
+```ini
+--alluredir=temps --clean-alluredir
+```
+
+**生成报告**
+
+```shell
+allure generate  -o report -c temps 
+```
+
+用代码去实现
+
+```python
+import os
+pytest.main()
+os.system("allure generate  -o report -c temps ")
+```
+
+### 11.2 allure 敏捷开发
+
+allure 支持对用例进行**分组和关联**
+
+```tex
+@allure.epic('电商系统')  表示项目
+@allure.feature('下单')  表示模块
+@allure.story('选择商品') 表示功能
+@allure.title('选择规格为一的物料')   表示用例
+```
+
+```python
+
+@allure.epic('电商系统')
+@allure.feature('下单')
+@allure.story('选择商品')
+@allure.title('选择规格为一的物料')
+@pytest.mark.ut
+def test_a():
+    pass
+
+@allure.epic('电商系统')
+@allure.feature('下单')
+@allure.story('确认订单')
+@allure.title('确认订单')
+@pytest.mark.ut
+def test_b():
+    pass
+```
+
+## 十二、web自动化测试实战
+
+pytest仅进行用例管理 ，**不会控制浏览器**，需要借助新的工具 **selenium**
+
+练习：用selenium打开一个浏览器
+
+```python
+@pytest.mark.web
+def test_web(selenium):
+    selenium.get('https://www.baidu.com')
+    print(selenium.title)
+    time.sleep(1)
+```
+
+**尝试自己写插件**
+
+## 十三、封装接口测试框架
+
+接口自动化封装
+
++ 使用 yaml 作为用例，降低自动化门槛
++ 自动请求接口、断言接口
++ 自动在日志记录HTTP报文
++ 自动生成allure测试报告
+
+### 13.1 yaml文件格式
+
+**YAML完全兼容JSON格式，并且支持Python相似写法**
+
+> 1.YAML完全兼容ISON
+>
+> 2.是数据格式，不是变成语言
+>
+> 3.像Python一样容易编辑和阅读
+
+#### 13.1.1 安装yaml
+
+```shell
+pip install pyyaml
+```
+
+#### 13.1.2 使用yaml
+
+1. `#` 作为注释符号
+2. 缩进：使用2个空格
+3. 成员表示
+   + `-`表示列表成员
+   + `:`表示字典成员
+4. 兜底: 完全兼容JSON
+
+```yaml
+# 这是我的yaml文件
+number:
+  - -1
+  - 1
+  - 1.1
+
+str:
+  - "ada"
+  - "12345"
+  - "aa11233"
+
+空值: null # json写法
+
+字典: { "a": 1, "b": 2 } # json写法
+```
+
+#### 13.1.3 加载yaml文件
+
+```python
+# 封装yaml函数
+def load_yaml(path):
+    with open(path,encoding="utf-8") as f: # 用open方法读取系统文件
+     s = f.read()
+    data = yaml.safe_load(s)  # 调用yaml加载方法
+    return data
+print(load_yaml('test_case.yaml'))
+```
+
+### 13.2 接口测试用例
+
+#### 13.2.1 设计用例内容
+
+1. 名字: 请求首页数据接口
+
+2. 标记[可选]
+
+3. 步骤
+
+   1. 请求接口:GET https://www.baidu.com
+
+   2. 响应断言:status_code== 200
+
+   3. 提取变量:json()['code']
+
+#### 13.2.2 YAML表示用例
+
+```yaml
+
+```
 
 
 
+### 13.3 封装框架
 
-
-
+1. 请求
+2. 断言响应
+3. 提取变量
 
 
 
