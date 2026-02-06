@@ -234,6 +234,44 @@ and currency = "USD"
 
 > 写出你的排查思路。
 
+**查看占用 CPU 使用率最高的进程？**
+
+```shell
+ps -aux | sort -k3nr | head -n 10
+```
+
+ **如何查看一个文件的末尾50 行？ **
+
+```shell
+tail -n 10 文件路径
+```
+
+**如何过滤文件内容中包含”ERROR“的行？**
+
+```shell
+grep -n "user"  filename.log
+```
+
+ **查看某端口号？**
+
+```shell
+netstat -anp | grep port_number
+```
+
+**查看某进程号**
+
+```shell
+ps -ef | grep 进程号
+```
+
+
+
+
+
+
+
+
+
 
 
 **MySQL 在 Web 测试中通常用来做什么？**
@@ -247,6 +285,10 @@ and currency = "USD"
 > 填充测试数据 清理脏数据
 >
 > 在问题定位的时候
+
+
+
+
 
 
 
