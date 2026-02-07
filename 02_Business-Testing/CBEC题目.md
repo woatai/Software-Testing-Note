@@ -264,13 +264,17 @@ netstat -anp | grep port_number
 ps -ef | grep 进程号
 ```
 
+**怎样了解您在当前目录下还有多大空间？**
 
+ ```shell
+ df -h .
+ ```
 
+**命令可以列出定义在以后特定时间运行一次的所有任务？**
 
-
-
-
-
+```shell
+atq
+```
 
 
 
