@@ -412,7 +412,7 @@ PASSED2026-01-27 23:00:41.878100 用例执行后
    + 全局范围：session   
      + 使用`conftest.py` 实现 跨文件的全局范围  
        + 在根目录 新建 `conftest.py` 文件
-     + 》 命名空间 怎么跨空间 使用第三方空间
+     + 命名空间 怎么跨空间 使用第三方空间
 
    ```python
    @pytest.fixture(scope='session')
@@ -582,6 +582,7 @@ allure generate  -o report -c temps
 ```python
 import os
 pytest.main()
+# 生成测试报告 -c 清除temps目录
 os.system("allure generate  -o report -c temps ")
 ```
 
@@ -713,6 +714,7 @@ print(load_yaml('test_case.yaml'))
 #### 13.2.2 YAML表示用例
 
 ```yaml
+# 登陆成功的用例
 
 ```
 
@@ -720,13 +722,148 @@ print(load_yaml('test_case.yaml'))
 
 ### 13.3 封装框架
 
-1. 请求
-2. 断言响应
-3. 提取变量
+#### 13.3.1 请求接口
 
+外部工具 `requests`
 
+```shell
+pip install requests
+```
 
+从http协议抓包角度，请求由三部分组成
 
+请求行：方法 加 地址
+
+```python
+import requests
+
+# 地址
+url = 'https://petstore.swagger.io/v2/pet/findByStatus?status=sold'
+
+# get 方法
+requests.get(url)
+# post 方法
+requests.post(url)
+
+# 任意方法
+requests.request('MOVE',url)
+```
+
+请求头 + 请求体（post）
+
+```python
+resq = requests.request(
+    method,
+    url,
+    headers={"accept": "application/json", "Content-Type": "application/json"},  # 字典
+    json={
+        "id": 0,
+        "category": {"id": 0, "name": "string"},
+        "name": "doggie",
+        "photoUrls": ["string"],
+        "tags": [{"id": 0, "name": "string"}],
+        "status": "available",
+    },
+)
+print(resq.text)
+```
+
+#### 13.3.2 断言响应
+
+响应：
+
+响应头：状态码
+
+响应行：键值对
+
+响应体：响应正文
+
+**获取响应**
+
+```python
+print(resq.status_code) # 响应码
+print(resq.headers) # 头
+print(resq.json()) # 响应正文 转成正文
+```
+
+**断言单个响应结果**
+
+```python
+# 断言单个内容是否正确
+assert resq.status_code == 200
+assert 'string' in resq.text
+assert resq.json()['tags'][0]['name'] == 'striSng'
+```
+
+**断言所有内容**
+
+```shell
+pip install response_valiator
+```
+
+```python
+# 接口断言 断言全部
+validator(
+  resq, # 写请求
+  status_code=200,
+  text='*string*',
+  json = {
+    'category': {
+      'id':0
+    }
+  }
+)
+```
+
+#### 13.3.3 提取变量
+
+基本原则：
+
++ JSON：JSONPATH
++ HTML：XPATH
++ 字符串：RE
+
+**RE是兜底的 因为其他本质上也是字符串**
+
+json返回的是列表
+
+```python
+import jsonpath
+
+data = {
+  "hisdata": [{"time":1711199902,"kw":"maven生命周期","fq":2},
+  {"time":1714492823,"kw":"全国软件水平考试"},
+  {"time":1714528756,"kw":"苹果更新为什么说我无法连接到网络"},
+  {"time":1714528831,"kw":"苹果更新需要充电吗"}]
+}
+
+# res = jsonpath.jsonpath(data,'$.hisdata')[0][0]['time']
+print(res)
+```
+
+**封装提取json函数**
+
+```python
+def extract(resp,attr_name,exp):
+  try:
+    resp.json = resp.json()
+  except Exception:
+    resp.json = {}
+   
+  attr = getattr(resp,attr_name) # 反射 等价于 attr = resp.json
+  res = jsonpath.jsonpath(attr,exp)
+  return res[0]
+```
+
+**调用**
+
+```python
+from extract_util import extract
+res = extract(resp,'json','$.tags[0].id')
+print(res)
+```
+
+### 13.4 落地封装
 
 
 
