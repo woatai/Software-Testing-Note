@@ -2176,20 +2176,38 @@ class 类名：
 
 ```python
 class Person:
-    name = "james"  # 类属性
-    @classmethod
-    def run(cls):  # c1s代表类对象本身，类本质上就是一个对象
-        print(f" {cls.name} running")
+    name = "james"  # 类属性：属于类本身，所有实例共享这一份数据
 
+    @classmethod
+    def run(cls):  
+        """
+        类方法：
+        1. 使用 @classmethod 修饰
+        2. 第一个参数是 cls（class），代表“类本身”
+        3. 可以通过 cls 访问类属性或调用其他类方法
+        4. 不依赖具体实例
+        """
+        # 通过 cls 访问类属性 name（等价于 Person.name）
+        print(f"{cls.name} running")
+# 创建实例对象
 p1 = Person()
+# 通过实例调用类方法
+# 实际上传入的 cls 仍然是 Person 类，而不是 p1
 p1.run()
+
+# 通过类直接调用类方法（更推荐的方式）
 Person.run()
 ```
 
-```
-应用场景：当方法中需要使用到类对象（如访问私有属性等），定义类方法
-类方法一般是配合类属性使用
-```
+> 操作“类级别的数据”
+>
+> 比如：
+>
+> 1. 操作类变量（共享数据）
+> 2. 不依赖实例（不需要 new 对象）
+> 3. 需要统一入口（工具类）
+> 4. 工厂方法（构造对象）
+> 5. 全局资源管理（token / config
 
 #### 16.8 `__new__`
 
