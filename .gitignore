@@ -12,6 +12,7 @@
 *.wma
 
 # Keep resumes local unless explicitly added.
+*.pdf
 *简历*
 *resume*
 *Resume*
