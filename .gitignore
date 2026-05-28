@@ -2,5 +2,19 @@
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 
-# Keep interview recordings local unless explicitly added.
-03_测试求职/霆万/*.m4a
+# Keep recordings local unless explicitly added.
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.flac
+*.ogg
+*.wma
+
+# Keep resumes local unless explicitly added.
+*简历*
+*resume*
+*Resume*
+*RESUME*
+*CV*
+*cv*
