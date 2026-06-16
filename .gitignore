@@ -19,3 +19,9 @@
 *RESUME*
 *CV*
 *cv*
+
+# Keep local SSH keys and command scratch files private.
+codex_cloud_ed25519
+codex_cloud_ed25519.pub
+ssh-command.md
+pwsh.txt
