@@ -2,6 +2,12 @@
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 
+# macOS metadata
+.DS_Store
+
+# Keep the standalone RAG project in its own Git repository.
+04_AI应用开发/02_RAG知识库/project_out/
+
 # Keep recordings local unless explicitly added.
 *.mp3
 *.wav
