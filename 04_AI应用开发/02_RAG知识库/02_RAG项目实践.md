@@ -2,7 +2,7 @@
 title: RAG 项目实践
 type: project
 status: active
-updated: 2026-08-26
+updated: 2026-09-17
 tags:
   - RAG
   - personal-test-rag
@@ -452,6 +452,14 @@ Dense Only
 > 我已经实现了什么；哪些内容经过了真实运行验证；哪些是我在 LexarRAG 中完成的测试与评测；哪些仍然只是下一步计划。
 
 不把代码存在等同于运行验证，也不把学习方案描述成生产项目经验。
+
+### AI 代码工具 / WorkBuddy 问题的项目映射
+
+面试时应按实际使用的工具命名：当前可以证明的是借助 AI 代码工具完成 `testcase_ai_` 的开发、测试和排障；如果实际使用的是 Codex，就说明“方法可迁移到 WorkBuddy”，不能把 Codex 经历直接说成 WorkBuddy 实践。AI 工具负责读取项目、拆解任务、生成或修改代码、执行检查并根据失败继续修正，项目运行时仍由 FastAPI、MySQL、Milvus、Ollama 和确定性 Python 逻辑组成。
+
+- 自动化流程：需求文本/Markdown/DOCX → 版本化业务知识检索 → 测试意图与正式用例覆盖判断 → 只生成缺失草稿 → Schema、引用、Grounding 和重复门禁 → JSON/XLSX/HTML → 人工审批 → 正式用例库与索引更新。
+- 数据统计脚本：`src/testcase_ai/evaluation.py` 读取人工 Gold Set，复用生产检索服务逐题执行，计算 HitRate@K、Recall@K、MRR 和失败明细，并同时输出 JSON 与 Markdown。当前 30 条评测已验证 `HitRate@10 = 1.0`、`Recall@10 = 1.0`、`MRR@10 = 0.9611`。
+- 人机协同边界：AI 自动处理重复、机械和可校验的步骤；确定性规则阻断无效引用、证据冲突和重复；人工负责确认业务真值、回答澄清问题、复核高风险结论并显式批准。只有审批通过的用例才允许回写和重新索引，保留版本、Trace、报告与回滚依据。
 
 ## 八、第三阶段：AI 测试用例 RAG 平台
 
